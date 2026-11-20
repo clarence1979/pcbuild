@@ -1,0 +1,148 @@
+<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ReBuild Lab — course map</title><style>
+:root{--ink:#1F2630;--paper:#FAFAF7;--pcb:#1E6E52;--pcbd:#145039;--gold:#C8902A;--blue:#2457C5;--amber:#E8A317;--red:#C0392B;--grey:#6F7681;--mid:#C9CED6;--light:#EEF0F2;
+--seg-start:#8A9099;--seg-learn:#2457C5;--seg-do:#1E6E52;--seg-check:#C8902A;--seg-pack:#6F7681;--radius:10px;
+--font:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--mono:Consolas,"DejaVu Sans Mono",Menlo,monospace}
+*{box-sizing:border-box}html{scroll-padding-top:120px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5}
+a{color:var(--blue)}
+.strip{position:sticky;top:0;z-index:20;background:var(--ink);color:#fff;padding:12px 24px 10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.strip-top{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.strip .course{font-weight:700;letter-spacing:.3px;color:#CFEFD9}
+.strip .where{font-family:var(--mono);color:#FFD166;font-size:14px}
+.strip h1{font-size:20px;margin:0;font-weight:700;flex:1 1 300px}
+.strip .clock{font-family:var(--mono);font-size:22px;font-weight:700;min-width:5.2em;text-align:right}
+.strip .clock.warn{color:#FFD166}.strip .clock.over{color:#FF8A80}
+.strip button{background:#2E9E5B;color:#fff;border:0;border-radius:6px;padding:6px 12px;font:inherit;font-weight:700;cursor:pointer}
+.strip button:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #FFD166;outline-offset:2px}
+.timeline{display:flex;gap:4px;margin-top:10px;height:30px}
+.timeline .seg{position:relative;border-radius:6px;overflow:hidden;background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;display:flex;align-items:center;padding:0 8px;white-space:nowrap}
+.timeline .seg .fill{position:absolute;inset:0;width:0;background:var(--c);opacity:.85;transition:width 1s linear}
+.timeline .seg span{position:relative;z-index:1;font-weight:600}
+.timeline .seg.now{box-shadow:inset 0 0 0 2px #FFD166}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 24px 60px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px}
+main{min-width:0;max-width:820px}
+.outcomes{background:#fff;border:1px solid var(--mid);border-left:6px solid var(--pcb);border-radius:var(--radius);padding:14px 18px;margin:0 0 20px}
+.outcomes h2{margin:0 0 6px;font-size:15px;color:var(--pcb)}
+.outcomes ol{margin:0;padding-left:20px}
+section.block{margin:26px 0 0}
+section.block>h2{display:flex;align-items:center;gap:10px;font-size:18px;margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid var(--c)}
+section.block>h2 .min{font-family:var(--mono);font-size:13px;color:#fff;background:var(--c);border-radius:999px;padding:2px 10px}
+section.block>h2 .who{font-size:12.5px;color:var(--grey);font-weight:400;margin-left:auto}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{position:relative;padding:8px 44px 8px 52px;margin:6px 0;background:#fff;border:1px solid var(--mid);border-radius:8px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:12px;top:9px;width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+.steps li label{display:block;cursor:pointer}
+.steps li input{position:absolute;right:12px;top:12px;width:18px;height:18px;accent-color:var(--pcb)}
+.steps li.done{background:#F1F8F4;border-color:#BFE3CC}
+.steps li.done label{color:var(--grey);text-decoration:line-through}
+.steps li .note{display:block;font-size:13.5px;color:var(--grey);margin-top:2px}
+.plain{margin:0;padding-left:20px}.plain li{margin:4px 0}
+.learn p{margin:10px 0}
+.callout{border-radius:8px;padding:12px 14px 12px 18px;margin:14px 0;background:#FFF8E6;border:1px solid #F3D48A;position:relative}
+.callout.danger{background:#FDECEA;border-color:#F1B2AC}
+.callout::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;border-radius:8px 0 0 8px;background:repeating-linear-gradient(135deg,#1F2630 0 8px,#E8A317 8px 16px)}
+.callout.danger::before{background:repeating-linear-gradient(135deg,#1F2630 0 8px,#C0392B 8px 16px)}
+.callout strong{display:block;margin-bottom:2px}
+.fig{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--mid);border-radius:var(--radius);margin:12px 0}
+.figcap{font-size:13.5px;color:var(--grey);margin:-6px 0 14px}
+figure{margin:0}
+code,kbd{font-family:var(--mono);font-size:.92em;background:#EEF0F2;padding:1px 5px;border-radius:4px}
+pre{background:#1F2630;color:#E8ECF1;padding:12px 14px;border-radius:8px;overflow:auto;font-family:var(--mono);font-size:13.5px;line-height:1.45}
+pre code{background:none;padding:0;color:inherit}
+.quiz .q{background:#fff;border:1px solid var(--mid);border-radius:8px;padding:12px 14px;margin:10px 0}
+.quiz .q p{margin:0 0 8px;font-weight:600}
+.quiz .opt{display:block;margin:4px 0;padding:6px 10px;border:1px solid var(--mid);border-radius:6px;cursor:pointer;background:#FAFAF7}
+.quiz .opt:hover{border-color:var(--blue)}
+.quiz .opt.right{background:#E6F4EA;border-color:#2E9E5B;font-weight:600}
+.quiz .opt.wrong{background:#FDECEA;border-color:#C0392B}
+.quiz .why{display:none;margin-top:8px;font-size:14px;color:var(--pcb)}
+.quiz .q.answered .why{display:block}
+aside{position:sticky;top:110px;align-self:start}
+.bench{background:#fff;border:1px solid var(--mid);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px}
+.bench h3{margin:0 0 8px;font-size:14px;color:var(--grey);font-weight:600}
+.bench ul{margin:0;padding-left:18px;font-size:14.5px}
+.bench li{margin:3px 0}
+.pdfbtn{display:flex;align-items:center;gap:10px;width:100%;background:var(--ink);color:#fff;border:0;border-radius:8px;padding:12px 14px;font:inherit;font-weight:700;cursor:pointer;text-align:left}
+.pdfbtn:hover{background:#2B333E}
+.pdfbtn small{font-weight:400;color:#CFEFD9;display:block}
+.dl{font-size:13px;margin:6px 0 0;text-align:center}
+.vocab dt{font-weight:700;margin-top:6px}.vocab dd{margin:0 0 4px;font-size:14px;color:#3A4350}
+footer{max-width:1180px;margin:0 auto;padding:0 24px 40px;font-size:13px;color:var(--grey);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a{color:var(--grey)}
+.roles{display:flex;gap:10px;margin:10px 0 0;font-size:13.5px;flex-wrap:wrap}
+.roles span{background:var(--light);border-radius:6px;padding:4px 10px}
+.pb{background:#fff;border:1px solid var(--mid);border-radius:var(--radius);padding:14px;margin:12px 0}
+.pb-grid{display:grid;grid-template-columns:1fr 240px;gap:16px;align-items:center}
+.pb-list label{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:14.5px}.pb-list label b{margin-left:auto;font-family:var(--mono);font-weight:600}
+.pb-list select{font:inherit;padding:3px 6px;margin-left:auto}
+.pb-verdict{text-align:center;font-weight:700;margin:4px 0 0}
+.ledsim{background:#fff;border:1px solid var(--mid);border-radius:var(--radius);padding:14px;margin:12px 0}
+.ledsim-row{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.ledsim-btn{width:120px;height:120px;border-radius:50%;background:#2B333E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#CFEFD9;font-size:11px}
+.ledsim-led{width:28px;height:28px;border-radius:50%;background:#555;box-shadow:0 0 0 3px #1F2630;transition:background .08s}
+.ledsim-led.amber{background:#F2A900;box-shadow:0 0 14px #F2A900,0 0 0 3px #1F2630}.ledsim-led.white{background:#fff;box-shadow:0 0 14px #fff,0 0 0 3px #1F2630}
+.ledsim-ctl label{display:block;margin-bottom:8px}.ledsim-ctl select,.ledsim-ctl button{font:inherit;padding:5px 9px;margin-right:6px}
+.ledsim-read{font-family:var(--mono);font-weight:600;margin:8px 0 0;color:var(--pcb)}
+.ledsim-note{font-size:13.5px;color:var(--grey);margin:10px 0 0}
+.crimp{background:#fff;border:1px solid var(--mid);border-radius:var(--radius);padding:12px;margin:12px 0}
+.crimp-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.crimp-tabs button{font:inherit;font-size:14px;padding:6px 10px;border:1px solid var(--mid);background:#FAFAF7;border-radius:6px;cursor:pointer}
+.crimp-tabs button.on{background:var(--pcb);color:#fff;border-color:var(--pcb)}
+.crimp-p{display:grid;grid-template-columns:360px 1fr;gap:16px;align-items:center}.crimp-p[hidden]{display:none}.crimp-p .fig{margin:0}.crimp-p p{margin:0;font-size:15px}
+.tester{background:#fff;border:1px solid var(--mid);border-radius:var(--radius);padding:14px;margin:12px 0}
+.tester-ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.tester-ctl select,.tester-ctl button{font:inherit;padding:5px 9px}
+.tester-units{display:flex;gap:24px;flex-wrap:wrap}
+.tester-unit{background:#2B333E;border-radius:10px;padding:12px 14px;color:#CFEFD9;min-width:300px}
+.tester-name{font-weight:700;margin-bottom:8px}
+.leds{display:flex;gap:8px}.led{display:flex;flex-direction:column;align-items:center;font-size:11px;gap:4px}
+.led i{width:18px;height:18px;border-radius:50%;background:#444;display:block}
+.led.on i{background:#2E9E5B;box-shadow:0 0 10px #2E9E5B}.led.bad i{background:#C0392B;box-shadow:0 0 10px #C0392B}
+.tester-read{font-weight:600;margin:12px 0 0;color:var(--ink)}
+.ipb{background:#fff;border:1px solid var(--mid);border-radius:var(--radius);padding:14px;margin:12px 0}
+.ipb-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px}.ipb-row input{font:inherit;font-family:var(--mono);padding:4px 6px;width:11em}
+.ipb-bits{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:6px 0;font-family:var(--mono);font-size:13px}
+.ipb-bits .oct{display:flex;gap:2px;align-items:center}.ipb-bits .oct b{width:3em;text-align:right;margin-right:6px;font-weight:600}
+.ipb-bits .bit{width:16px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:3px;background:#EEF0F2}
+.ipb-bits .bit.one{background:var(--blue);color:#fff}.ipb-mask .bit.one{background:var(--gold)}
+.ipb-bits .bit.net{outline:2px solid var(--gold)}
+.ipb-read{font-weight:600;margin:10px 0 0}
+.term{background:#1F2630;border-radius:8px;overflow:hidden;margin:12px 0;font-family:var(--mono);font-size:13.5px}
+.term-bar{background:#2B333E;color:#CFEFD9;padding:5px 12px;font-size:12px}
+.term-body{padding:10px 14px;color:#E8ECF1;min-height:80px}
+.term .tl{white-space:pre;opacity:0;animation:tl .3s forwards}
+@keyframes tl{to{opacity:1}}
+.rubric{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}.rubric th,.rubric td{border:1px solid var(--mid);padding:6px 8px;vertical-align:top;text-align:left}.rubric th{background:var(--light)}
+table.plain{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0}table.plain th,table.plain td{border:1px solid var(--mid);padding:6px 8px;vertical-align:top;text-align:left}table.plain th{background:var(--light)}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}aside{position:static}.pb-grid,.crimp-p{grid-template-columns:1fr}.strip h1{font-size:17px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;animation-iteration-count:1!important}}
+@media print{.strip,aside,.pdfbtn,.dl{display:none}.wrap{display:block}}
+
+.hero{background:var(--ink);color:#fff;padding:40px 24px 30px}
+.hero .in{max-width:1180px;margin:0 auto}
+.hero h1{font-size:34px;margin:0 0 6px}.hero p{margin:4px 0;color:#CFEFD9;max-width:760px}
+.arc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:1180px;margin:-18px auto 0;padding:0 24px}
+.arc div{background:#fff;border:1px solid var(--mid);border-radius:10px;padding:14px 16px;border-top:6px solid var(--c)}
+.arc b{display:block;font-size:15px}.arc span{font-size:13.5px;color:var(--grey)}
+.grid{max-width:1180px;margin:30px auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
+.wk{background:#fff;border:1px solid var(--mid);border-radius:10px;padding:14px 16px}
+.wk h2{font-size:16px;margin:0 0 8px;display:flex;gap:10px;align-items:baseline}.wk h2 .n{font-family:var(--mono);color:var(--pcb);font-size:13px}
+.wk a{display:block;padding:7px 10px;margin:4px 0;border-radius:6px;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--light)}
+.wk a:hover{border-color:var(--blue);background:#fff}.wk a small{display:block;color:var(--grey);font-size:12.5px}
+.notes{max-width:1180px;margin:0 auto 50px;padding:0 24px}
+.notes h2{font-size:18px}
+.notes table.plain{font-size:14px}
+</style></head><body>
+<div class="hero"><div class="in"><h1>ReBuild Lab: PC Building, Repair &amp; Maintenance</h1>
+<p>Year 9/10 elective · 18 weeks · 54 lessons of 45 minutes · 20 students in pairs on ten Dell OptiPlex 7050 SFF benches.</p>
+<p>Each lesson page runs the 45 minutes on a timer, carries its own animated figures, and holds a printable A4 worksheet (the button in the right column).</p></div></div>
+<div class="arc"><div style="--c:var(--seg-learn)"><b>Weeks 1–6 · Know the machine</b><span>Every part of the Dell 7050: what it does, how to remove and refit it, how to test it.</span></div><div style="--c:var(--seg-do)"><b>Weeks 7–11 · Upgrade and transplant</b><span>GPU, PSU, open frame, the three-lesson rebuild, then troubleshooting and a fresh OS.</span></div><div style="--c:var(--seg-check)"><b>Weeks 12–18 · Connect and play</b><span>Cables, IP, the lab LAN, a Python chat server, a LAN party, then the capstone.</span></div></div>
+<div class="grid"><div class="wk"><h2><span class="n">Week 1</span>Safety and anatomy</h2><a href="L01_W1L1.html">Lesson 1 · Welcome to the bench: what we will build, and how we stay safe<small>Explain what the course builds over 18 weeks (upgrade, transplant, LAN).</small></a><a href="L02_W1L2.html">Lesson 2 · Anatomy tour: every part inside the Dell and what it does<small>Point to and name 12 parts inside the 7050.</small></a><a href="L03_W1L3.html">Lesson 3 · Teardown level 1: out, in, and it still boots<small>Remove and refit the drive cage and a RAM module safely.</small></a></div><div class="wk"><h2><span class="n">Week 2</span>The processor and its cooler</h2><a href="L04_W2L1.html">Lesson 1 · How a CPU works: fetch, decode, execute<small>Describe the fetch-decode-execute cycle.</small></a><a href="L05_W2L2.html">Lesson 2 · Sockets and coolers: taking the heat off the processor<small>Identify the LGA1151 socket, its lever and the alignment triangle.</small></a><a href="L06_W2L3.html">Lesson 3 · Thermals lab: re-paste, refit, measure the difference<small>Apply thermal paste and refit the cooler in the X pattern.</small></a></div><div class="wk"><h2><span class="n">Week 3</span>Memory</h2><a href="L07_W3L1.html">Lesson 1 · Memory: what RAM is, what the numbers mean<small>Explain why RAM is fast but forgets.</small></a><a href="L08_W3L2.html">Lesson 2 · Install RAM: pairs, slots and the BIOS check<small>Install two DIMMs in the correct paired slots.</small></a><a href="L09_W3L3.html">Lesson 3 · Memory faults: testing RAM and reading the signs<small>Run a memory test and read its result.</small></a></div><div class="wk"><h2><span class="n">Week 4</span>Storage</h2><a href="L10_W4L1.html">Lesson 1 · Storage: hard drives, SATA SSDs and NVMe<small>Compare HDD, SATA SSD and NVMe on speed, moving parts and price.</small></a><a href="L11_W4L2.html">Lesson 2 · Install an NVMe SSD and cable a SATA drive<small>Fit an M.2 NVMe SSD into the 2280 slot with the retaining screw.</small></a><a href="L12_W4L3.html">Lesson 3 · Disks in the operating system: partition, format, benchmark<small>Initialise a new disk with GPT and create a formatted partition.</small></a></div><div class="wk"><h2><span class="n">Week 5</span>Motherboard and firmware</h2><a href="L13_W5L1.html">Lesson 1 · The motherboard map: chipset, slots, headers and form factors<small>Trace how the CPU, chipset and slots connect.</small></a><a href="L14_W5L2.html">Lesson 2 · Firmware: BIOS/UEFI, POST and the boot order<small>Explain what firmware does before the OS starts.</small></a><a href="L15_W5L3.html">Lesson 3 · Front panel and the Dell problem: buttons, LEDs and adapters<small>Read a standard front-panel header pinout.</small></a></div><div class="wk"><h2><span class="n">Week 6</span>Power</h2><a href="L16_W6L1.html">Lesson 1 · Power supplies: volts, watts, rails and connectors<small>Explain what a PSU does and name its three main rails.</small></a><a href="L17_W6L2.html">Lesson 2 · Power budget: size the PSU, then test it<small>Add up a build's power draw and choose a PSU with headroom.</small></a><a href="L18_W6L3.html">Lesson 3 · Cabling the ATX PSU: dry run with the 24→6 adapter<small>Route and connect every PSU cable on the bench without power.</small></a></div><div class="wk"><h2><span class="n">Week 7</span>Graphics</h2><a href="L19_W7L1.html">Lesson 1 · Graphics cards: what a GPU does and how it fits<small>Explain why games need a GPU and spreadsheets do not.</small></a><a href="L20_W7L2.html">Lesson 2 · Install the graphics card and get a picture<small>Seat a card in the PCIe x16 slot with the latch and bracket screw.</small></a><a href="L21_W7L3.html">Lesson 3 · Benchmark: iGPU vs card, and what the numbers mean<small>Run a graphics benchmark and read FPS and temperature.</small></a></div><div class="wk"><h2><span class="n">Week 8</span>Cases and the transplant plan</h2><a href="L22_W8L1.html">Lesson 1 · Cases and cooling: airflow, standoffs and the open frame<small>Describe the path air takes through a case and why.</small></a><a href="L23_W8L2.html">Lesson 2 · The compatibility audit: will the Dell board fit, and what else do we need?<small>Measure the Dell board's mounting holes and compare with the frame.</small></a><a href="L24_W8L3.html">Lesson 3 · Transplant run-sheet: order of operations, labels and the before-photo<small>Write a step-by-step run-sheet for next week's three lessons.</small></a></div><div class="wk"><h2><span class="n">Week 9</span>The transplant</h2><a href="L25_W9L1.html">Lesson 1 · Rebuild 1 of 3: strip the Dell<small>Remove every component from the Dell case in the planned order.</small></a><a href="L26_W9L2.html">Lesson 2 · Rebuild 2 of 3: mount the board, PSU, power and button on the frame<small>Fit standoffs in the matched holes and mount the board with washers.</small></a><a href="L27_W9L3.html">Lesson 3 · Rebuild 3 of 3: RAM, SSD, GPU, fan, cable management and first power-on<small>Fit RAM, M.2 SSD, SATA drive, GPU and case fan on the frame.</small></a></div><div class="wk"><h2><span class="n">Week 10</span>Troubleshooting</h2><a href="L28_W10L1.html">Lesson 1 · Troubleshooting method: six steps and a log<small>Use the six-step troubleshooting method on a described fault.</small></a><a href="L29_W10L2.html">Lesson 2 · Reading the machine: Dell LED codes, the one beep and the no-POST ladder<small>Decode a Dell amber blink pattern using the table.</small></a><a href="L30_W10L3.html">Lesson 3 · Fault lab: planted faults, timed diagnosis<small>Diagnose and fix three planted hardware faults using the six steps.</small></a></div><div class="wk"><h2><span class="n">Week 11</span>Operating system</h2><a href="L31_W11L1.html">Lesson 1 · Boot media and the install: USB, boot menu, partitions<small>Create a bootable USB installer.</small></a><a href="L32_W11L2.html">Lesson 2 · First boot: drivers, updates, accounts and the lab image<small>Install drivers and updates on a fresh OS.</small></a><a href="L33_W11L3.html">Lesson 3 · Software troubleshooting: boot problems, safe mode, disk health and backups<small>Diagnose a no-boot that is software, not hardware.</small></a></div><div class="wk"><h2><span class="n">Week 12</span>Networks: foundations</h2><a href="L34_W12L1.html">Lesson 1 · Networks: NICs, MAC addresses, switches and what a LAN is<small>Define LAN, NIC, MAC address and switch.</small></a><a href="L35_W12L2.html">Lesson 2 · How data travels: frames, packets, ports and the four layers<small>Describe the four-layer model and what each layer adds.</small></a><a href="L36_W12L3.html">Lesson 3 · Cables and standards: Cat5e/6, twisted pairs, RJ45 and the rules<small>Explain why Ethernet pairs are twisted and what Cat5e/Cat6 mean.</small></a></div><div class="wk"><h2><span class="n">Week 13</span>Cable making and testing</h2><a href="L37_W13L1.html">Lesson 1 · The T568B pinout: colours, order and why both ends match<small>Recite the T568B wire order from memory.</small></a><a href="L38_W13L2.html">Lesson 2 · Make a patch lead: strip, order, trim, insert, crimp<small>Terminate one end of a Cat5e cable to T568B.</small></a><a href="L39_W13L3.html">Lesson 3 · Test, diagnose, fix: the LAN tester and what each light means<small>Use a cable tester to pass or fail a patch lead.</small></a></div><div class="wk"><h2><span class="n">Week 14</span>IP addressing</h2><a href="L40_W14L1.html">Lesson 1 · IP addresses: dotted decimal, binary and the private ranges<small>Convert an octet between decimal and binary.</small></a><a href="L41_W14L2.html">Lesson 2 · Subnet masks: who is on my network, and who needs a router<small>Explain what a /24 subnet mask does.</small></a><a href="L42_W14L3.html">Lesson 3 · Static IP, link lights and the first ping<small>Set a static IP address and mask on Windows and Linux.</small></a></div><div class="wk"><h2><span class="n">Week 15</span>Building the LAN</h2><a href="L43_W15L1.html">Lesson 1 · Build the lab LAN: cable every bench, ping every neighbour<small>Connect 20 PCs to the switch with a documented port plan.</small></a><a href="L44_W15L2.html">Lesson 2 · Network troubleshooting: the bottom-up ladder on planted faults<small>Apply the bottom-up ladder to find a network fault in under five minutes.</small></a><a href="L45_W15L3.html">Lesson 3 · Ports, sockets and telnet: talking to a program by its door number<small>Explain what a port and a socket are.</small></a></div><div class="wk"><h2><span class="n">Week 16</span>Sockets, chat and firewalls</h2><a href="L46_W16L1.html">Lesson 1 · Write a chat server in Python: sockets, bind, listen, accept<small>Explain what each socket call does: socket, bind, listen, accept, recv, send.</small></a><a href="L47_W16L2.html">Lesson 2 · Write the chat client, run a class-wide chat, and read the traffic<small>Write a socket client that sends and receives at the same time.</small></a><a href="L48_W16L3.html">Lesson 3 · Firewalls and services: open exactly one door<small>Explain what a host firewall does and why the default is 'block inbound'.</small></a></div><div class="wk"><h2><span class="n">Week 17</span>LAN party and the wider network</h2><a href="L49_W17L1.html">Lesson 1 · LAN party setup: host a game server and connect every bench<small>Host a multiplayer game server on one bench and join from the others over the LAN.</small></a><a href="L50_W17L2.html">Lesson 2 · LAN party: play, measure, and see the network under load<small>Play a 20-player LAN session and keep it running.</small></a><a href="L51_W17L3.html">Lesson 3 · From LAN to WAN: routers, DHCP, DNS and why the lab is an island<small>Explain what a router, DHCP and DNS add to a network.</small></a></div><div class="wk"><h2><span class="n">Week 18</span>Capstone and wrap-up</h2><a href="L52_W18L1.html">Lesson 1 · Capstone 1: full fault diagnosis under time<small>Diagnose and repair two unknown faults (one hardware, one network) on a PC you did not build.</small></a><a href="L53_W18L2.html">Lesson 2 · Capstone 2: the technician's hand-over document and a 3-minute demo<small>Write a one-page hand-over for your rebuilt PC: parts, settings, IP, known issues.</small></a><a href="L54_W18L3.html">Lesson 3 · Wrap-up: showcase, decommission the lab, what comes next<small>Present a showcase demo to the class.</small></a></div></div>
+<div class="notes"><h2>Lab address plan</h2><table class="plain"><tr><th>Item</th><th>Value</th></tr>
+<tr><td>Network</td><td>192.168.10.0/24 (mask 255.255.255.0), no gateway, no DHCP, no DNS. Isolated switch only.</td></tr>
+<tr><td>Teacher PC</td><td>192.168.10.1 on switch port 24</td></tr>
+<tr><td>Benches 1–20</td><td>192.168.10.11 – 192.168.10.30, switch ports 1–20, hostnames PC-01 – PC-20</td></tr>
+<tr><td>Chat server</td><td>TCP 2323 (Python, Weeks 16–17)</td></tr>
+<tr><td>Game</td><td>Minecraft Java TCP 25565 if licensed; otherwise Luanti UDP 30000 (free, open source)</td></tr></table>
+<p style="font-size:13px;color:var(--grey)">Teacher guide (answers, planted-fault lists, kit list, curriculum map): <a href="teacher-guide.html">teacher-guide.html</a></p></div>
+<footer><span>ReBuild Lab · Plenty Valley Christian College · Digital Technologies</span><span>Victorian Curriculum 2.0 Digital Technologies 9–10: Digital Systems and Security</span></footer>
+</body></html>
